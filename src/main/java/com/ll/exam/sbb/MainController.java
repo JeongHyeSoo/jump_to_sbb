@@ -119,7 +119,7 @@ public class MainController {
     @ResponseBody
     public String saveSession(@PathVariable String name, @PathVariable String value, HttpServletRequest req) {
         HttpSession session = req.getSession();
-
+        // req => 쿠키 => JSESSIONID => 세션을 얻을 수 있다.
         session.setAttribute(name, value);
 
         return "세션변수 %s의 값이 %s(으)로 설정되었습니다.".formatted(name, value);
