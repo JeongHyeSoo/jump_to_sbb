@@ -6,6 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 class SbbApplicationTests {
 	@Autowired
@@ -27,5 +29,8 @@ class SbbApplicationTests {
 		q1.setContent("id는 자동으로 생성되나요?");
 		q1.setCreateDate(LocalDateTime.now());
 		questionRepository.save(q2);
+
+		assertThat(q1.getId()).isGreaterThan(0);
+		assertThat(q2.getId()).isGreaterThan(q1.getId());
 	}
 }
