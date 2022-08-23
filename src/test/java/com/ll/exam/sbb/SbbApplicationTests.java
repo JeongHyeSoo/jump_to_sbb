@@ -38,7 +38,7 @@ class SbbApplicationTests {
 		assertThat(q2.getId()).isGreaterThan(q1.getId());
 	}
 
-	@Test
+	@Test // 조회
 	void testJpa2() {
 		//SELECT * FROM QUESTION
 		List<Question> all = questionRepository.findAll();
@@ -48,30 +48,41 @@ class SbbApplicationTests {
 		assertEquals("sbb가 무엇인가요?", q.getSubject());
 	}
 
-	@Test
+	@ // 조회
 	void testJpa3() {
 		//SELECT * FROM QUESTION
 		Question q = questionRepository.findBySubject("sbb가 무엇인가요?");
 		assertEquals(1,q.getId());
 	}
-	@Test
+	@Test // 조회
 	void testJpa4() {
 		Question q = this.questionRepository.findBySubjectAndContent(
 				"sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.");
 		assertEquals(1, q.getId());
 	}
-	@Test
+	@Test // 조회
 	void testJpa5() {
 		List<Question> qList = this.questionRepository.findBySubjectLike("sbb%");
 		Question q = qList.get(0);
 		assertEquals("sbb가 무엇인가요?", q.getSubject());
 	}
-	@Test
+	@Test // 수정
 	void testJpa6() {
 		Optional<Question> oq = this.questionRepository.findById(1);
 		assertTrue(oq.isPresent());
 		Question q = oq.get();
 		q.setSubject("수정된 제목");
 		this.questionRepository.save(q);//UPDATE
+	}
+	@Test // 삭제
+	void testJpa7() {
+		assertEquals(2, this.questionRepository.count());
+		Optional<Question> oq = this.questionRepository.findById(1);
+		assertTrue(oq.isPresent());
+		Question q = oq.get();
+
+		this.questionRepository.delete(q);
+
+		assertEquals(1, this.questionRepository.count());
 	}
 }
