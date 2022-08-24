@@ -20,7 +20,7 @@ class SbbApplicationTests {
 	void contextLoads() {
 	}
 
-	@Test
+	@Test //INSERT INTO QUESTION (content, create_date, subject) values	(?, ?, ?)
 	void testJpa(){
 		Question q1 = new Question();
 		q1.setSubject("sbb가 무엇인가요?");
@@ -38,9 +38,8 @@ class SbbApplicationTests {
 		assertThat(q2.getId()).isGreaterThan(q1.getId());
 	}
 
-	@Test // 조회
+	@Test // SELECT * FROM QUESTION
 	void testJpa2() {
-		//SELECT * FROM QUESTION
 		List<Question> all = questionRepository.findAll();
 		assertEquals(2, all.size());
 
@@ -48,25 +47,24 @@ class SbbApplicationTests {
 		assertEquals("sbb가 무엇인가요?", q.getSubject());
 	}
 
-	@ // 조회
+	@Test // SELECT * FROM QUESTION WHERE
 	void testJpa3() {
-		//SELECT * FROM QUESTION
 		Question q = questionRepository.findBySubject("sbb가 무엇인가요?");
 		assertEquals(1,q.getId());
 	}
-	@Test // 조회
+	@Test // SELECT * FROM QUESTION WHERE
 	void testJpa4() {
 		Question q = this.questionRepository.findBySubjectAndContent(
 				"sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.");
 		assertEquals(1, q.getId());
 	}
-	@Test // 조회
+	@Test // SELECT * FROM QUESTION WHERE
 	void testJpa5() {
 		List<Question> qList = this.questionRepository.findBySubjectLike("sbb%");
 		Question q = qList.get(0);
 		assertEquals("sbb가 무엇인가요?", q.getSubject());
 	}
-	@Test // 수정
+	@Test // UPDATE SET WHERE
 	void testJpa6() {
 		Optional<Question> oq = this.questionRepository.findById(1);
 		assertTrue(oq.isPresent());
@@ -74,7 +72,7 @@ class SbbApplicationTests {
 		q.setSubject("수정된 제목");
 		this.questionRepository.save(q);//UPDATE
 	}
-	@Test // 삭제
+	@Test // DELETE
 	void testJpa7() {
 		assertEquals(2, this.questionRepository.count());
 		Optional<Question> oq = this.questionRepository.findById(1);
