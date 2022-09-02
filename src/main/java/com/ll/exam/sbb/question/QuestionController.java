@@ -24,3 +24,4 @@ public class QuestionController {
         return "question_list";
     }
 }
+
