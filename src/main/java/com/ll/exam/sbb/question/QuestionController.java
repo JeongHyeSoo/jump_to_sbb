@@ -23,10 +23,4 @@ public class QuestionController {
         model.addAttribute("questionList", questionList);
         return "question_list";
     }
-
-    @RequestMapping("/question/list2")
-    @ResponseBody
-    public String list2() {
-        return "하하111777";
-    }
 }
